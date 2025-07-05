@@ -1,0 +1,41 @@
+%{
+#include <stdio.h>
+
+int characters = 0;
+int words = 0;
+int spaces = 0;
+int lines = 0;
+%}
+
+%%
+
+[ \t]+        { spaces += yyleng; characters += yyleng; }  // Match spaces and tabs
+\n            { lines++; characters++; }                  // Match new lines
+[^\n \t]+     { words++; characters += yyleng; }          // Match words (non-whitespace characters)
+.             { characters++; }                           // Match all other characters
+
+%%
+
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        printf("Usage: %s <input_file>\n", argv[0]);
+        return 1;
+    }
+
+    FILE *file = fopen(argv[1], "r");
+    if (!file) {
+        printf("Could not open file %s\n", argv[1]);
+        return 1;
+    }
+
+    yyin = file;
+    yylex();
+    fclose(file);
+
+    printf("Characters: %d\n", characters);
+    printf("Words: %d\n", words);
+    printf("Spaces: %d\n", spaces);
+    printf("Lines: %d\n", lines);
+
+    return 0;
+}
