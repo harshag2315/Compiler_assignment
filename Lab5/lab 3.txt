@@ -1,0 +1,7 @@
+Title: Syntax Analysis via Yacc Tool
+
+List of Lab Activities:
+
+1.      WAP to test the validity of a simple expression involving operators- +, -, *, and /.
+
+2.      WAP to evaluate an arithmetic expression involving operators- +, -, *, and /.
